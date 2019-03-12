@@ -93,7 +93,7 @@ create_new_plate <- function(creds, plate_df) {
 
           { c<- my_updateCellContents(creds,resource, new_plate_barcode, as.numeric(x[4]),
                                  x[1], -1, "mL", -1000, "mM",useVerbose = FALSE)
-          Sys.sleep(2)
+          Sys.sleep(.1)
           print(paste(x[4],x[1],httr::content(c$response)))
           
           c

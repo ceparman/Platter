@@ -1,3 +1,12 @@
+# account <- CoreAPIV2::coreAPI("Credentialsfreq.txt")
+
+# login <- CoreAPIV2::authBasic(account)
+# creds<- login$coreApi
+
+
+# plate_df <- read.csv2("plate_template.csv",sep=",",stringsAsFactors = F)[,-1]
+
+#lo <- CoreAPIV2::logOut(creds)
 
 
 update_plate <- function(creds, plate_barcode, plate_df) {
@@ -59,9 +68,15 @@ update_plate <- function(creds, plate_barcode, plate_df) {
 
   d <- apply(fills, 1, function(x) {
     ifelse(x[1] == "",NA,
-
-           my_updateCellContents(creds,resource, plate_barcode, as.numeric(x[4]),
-                                 x[1], -1, "mL", -1000, "mM",useVerbose = FALSE)
+           
+           { c<- my_updateCellContents(creds,resource, plate_barcode, as.numeric(x[4]),
+                                       x[1], -1, "mL", -1000, "mM",useVerbose = FALSE)
+             Sys.sleep(.1)
+             print(paste(x[4],x[1],httr::content(c$response)))
+             
+             c
+           }
+           
            
     )
   })
